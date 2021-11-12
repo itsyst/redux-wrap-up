@@ -2,7 +2,7 @@ import * as actions from "./actionTypes";
 
 let lastId = 0;
 
-export default function reducer(state: any[] = [], action: any) {
+export const reducer = (state: any[] = [], action: any) => {
     switch (action.type) {
         case actions.ADD_BUG:
             return [
