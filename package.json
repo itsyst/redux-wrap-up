@@ -22,6 +22,7 @@
     "immutable": "^4.0.0",
     "lodash": "^4.17.21",
     "redux": "^4.1.2",
+    "redux-devtools-extension": "^2.13.9",
     "update": "^0.4.2"
   }
 }
