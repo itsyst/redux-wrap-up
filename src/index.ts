@@ -1,23 +1,15 @@
 import store from './store'
-import * as actions from './actionTypes';
+import { addBug, removeBug} from './actionCreators';
 
-const unsubscribe = store.subscribe(() => {
-    console.log("Store changed!", store.getState());
-})
 
-store.dispatch({
-    type: actions.ADD_BUG,
-    payload: {
-        description: "Bug-001"
-    }
-})
+// const unsubscribe = store.subscribe(() => {
+//     console.log("Store changed!", store.getState());
+// })
 
-unsubscribe();
+store.dispatch(addBug("Bug - 0001"));
 
-store.dispatch({
-    type: actions.REMOVE_BUG,
-    payload: {
-        id: 1
-    }
-})
+//unsubscribe();
+
+//store.dispatch(removeBug(1));
+
 console.log(store.getState());
