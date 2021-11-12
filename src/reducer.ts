@@ -1,5 +1,5 @@
 import * as actions from "./actionTypes";
-
+ 
 let lastId = 0;
 
 export const reducer = (state: any[] = [], action: any) => {
@@ -16,6 +16,9 @@ export const reducer = (state: any[] = [], action: any) => {
 
         case actions.REMOVE_BUG:
             return state.filter(bug => bug.id !== action.payload.id);
+
+        case actions.RESOLVE_BUG:
+            return state.map(bug => bug.id !== action.payload.id ? bug : { ...bug, resolved: true })
 
         default:
             return state;
