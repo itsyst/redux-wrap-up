@@ -1,5 +1,5 @@
 import store from './store/store'
-import { addBug, resolveBug, removeBug, unresolvedBugsSelector } from './store/bugs';
+import { addBug, resolveBug, removeBug, unresolvedBugsSelector, structuredSelector } from './store/bugs';
 import { addProject } from './store/projects';
 
 const unsubscribe = store.subscribe(() => {
@@ -18,3 +18,4 @@ unsubscribe();
 
 console.log(store.getState());
 console.log(unresolvedBugsSelector(store.getState()));
+console.log(structuredSelector(store.getState()));

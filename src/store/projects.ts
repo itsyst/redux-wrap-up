@@ -12,6 +12,7 @@ const projectSlice = createSlice({
             projects.push({
                 id: ++lastId,
                 name: action.payload.name,
+                resolved: false,
              })
         },
     }
