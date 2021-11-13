@@ -1,33 +1,31 @@
-import { createAction } from "@reduxjs/toolkit";
+import { createAction, createReducer } from "@reduxjs/toolkit";
 
 // Action creators
 export const addBug = createAction<string | object>("ADD_BUG");
-export const removeBug = createAction<string | object>("REMOVE_BUG");
 export const resolveBug = createAction<string | object>("RESOLVE_BUG");
- 
+export const removeBug = createAction<string | object>("REMOVE_BUG");
+
 // Reducer
 let lastId = 0;
 
-export const reducer = (state: any[] = [], action: any) => {
-    switch (action.type) {
-        case addBug.type:
-            return [
-                ...state,
-                {
-                    id: ++lastId,
-                    description: action.payload.description,
-                    resolved: false
-                }
-            ];
+export default createReducer([], {
 
-        case removeBug.type:
-            return state.filter(bug => bug.id !== action.payload.id);
+    ADD_BUG: (bugs, action) => {
+        bugs.push({
+            id: ++lastId,
+            description: action.payload.description,
+            resolved: false
+        })
+    },
 
-        case resolveBug.type:
-            return state.map(bug => bug.id !== action.payload.id ? bug : { ...bug, resolved: true })
+    RESOLVE_BUG: (bugs, action) => {
+        const index = bugs.findIndex(bug => bug.id === action.payload.id);
+        bugs[index].resolved = true;
+    },
 
-        default:
-            return state;
+    REMOVE_BUG: (bugs, action) => {
+        const index = bugs.findIndex(bug => bug.id === action.payload.id);
+        bugs.splice(index, 1);
     }
-}
+});
 
