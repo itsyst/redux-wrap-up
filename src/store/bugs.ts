@@ -31,3 +31,7 @@ const bugSlice = createSlice({
 
 export const { addBug, resolveBug, removeBug } = bugSlice.actions
 export default bugSlice.reducer
+
+export function addProject(arg0: {}): any {
+    throw new Error('Function not implemented.');
+}
