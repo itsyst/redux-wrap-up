@@ -10,7 +10,7 @@ let lastId = 0;
 
 export default createReducer([], {
 
-    ADD_BUG: (bugs, action) => {
+    [addBug.type]: (bugs, action) => {
         bugs.push({
             id: ++lastId,
             description: action.payload.description,
@@ -18,12 +18,12 @@ export default createReducer([], {
         })
     },
 
-    RESOLVE_BUG: (bugs, action) => {
+    [resolveBug.type]: (bugs, action) => {
         const index = bugs.findIndex(bug => bug.id === action.payload.id);
         bugs[index].resolved = true;
     },
 
-    REMOVE_BUG: (bugs, action) => {
+    [removeBug.type]: (bugs, action) => {
         const index = bugs.findIndex(bug => bug.id === action.payload.id);
         bugs.splice(index, 1);
     }
