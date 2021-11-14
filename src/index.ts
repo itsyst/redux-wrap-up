@@ -18,16 +18,16 @@ import { addProject } from './store/projects';
 store.dispatch(addUser({ name: "User 1" }));
 store.dispatch(addUser({ name: "User 2" }));
 
-store.dispatch(addBug({ description: "Bug - 0001" }));
-store.dispatch(addBug({ description: "Bug - 0002" }));
-store.dispatch(addBug({ description: "Bug - 0003" }));
-store.dispatch(addBug({ description: "Bug - 0004" }));
-store.dispatch(resolveBug({ id: 2 }));
-store.dispatch(removeBug({ id: 3 }));
+// store.dispatch(addBug({ description: "Bug - 0001" }));
+// store.dispatch(addBug({ description: "Bug - 0002" }));
+// store.dispatch(addBug({ description: "Bug - 0003" }));
+// store.dispatch(addBug({ description: "Bug - 0004" }));
+// store.dispatch(resolveBug({ id: 2 }));
+// store.dispatch(removeBug({ id: 3 }));
 
-store.dispatch(addProject({ name: "Project1" }))
+// store.dispatch(addProject({ name: "Project1" }))
 
-store.dispatch(assignBugToUser({ bugId: 2, userId: 1}));
+// store.dispatch(assignBugToUser({ bugId: 2, userId: 1}));
 
 
 
@@ -37,3 +37,5 @@ store.dispatch(assignBugToUser({ bugId: 2, userId: 1}));
 // console.log(unresolvedBugsSelector(store.getState()));
 console.log(structuredSelector(store.getState()));
 console.log(bugsByUserSelector(1)(store.getState()));
+
+ 

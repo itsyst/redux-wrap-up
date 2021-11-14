@@ -6,4 +6,7 @@ export default combineReducers({
     entities: entitiesReducer
 });
 
+export type CombineReducers = typeof combineReducers
+
+
 
