@@ -29,13 +29,18 @@ store.dispatch(addUser({ name: "User 1" }));
 
 // store.dispatch(assignBugToUser({ bugId: 2, userId: 1}));
 
+// Dispatch a function
+store.dispatch(() => {
+    store.dispatch({ type: 'RECEIVED_BUG', bugs: [1, 2, 3] })
+});
+
 
 
 // unsubscribe();
 
 // console.log(store.getState());
 // console.log(unresolvedBugsSelector(store.getState()));
-console.log(structuredSelector(store.getState()));
-console.log(bugsByUserSelector(1)(store.getState()));
+// console.log(structuredSelector(store.getState()));
+// console.log(bugsByUserSelector(1)(store.getState()));
 
- 
+
