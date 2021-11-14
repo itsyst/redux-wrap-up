@@ -1,14 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducer';
 import logger from './middleware/logger';
- 
+import toast from './middleware/toast';
+
 
 // Middleware without redux toolkit
 // const store = createStore({ reducer, applyMiddleware(logger) });
 
 const store = configureStore({
     reducer: reducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger({ destination: "dev" })),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger({ destination: "dev" }), toast),
     devTools: process.env.NODE_ENV !== 'production'
 });
 
