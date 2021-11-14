@@ -16,7 +16,7 @@ import { addProject } from './store/projects';
 // })
 
 store.dispatch(addUser({ name: "User 1" }));
-store.dispatch(addUser({ name: "User 2" }));
+// store.dispatch(addUser({ name: "User 2" }));
 
 // store.dispatch(addBug({ description: "Bug - 0001" }));
 // store.dispatch(addBug({ description: "Bug - 0002" }));

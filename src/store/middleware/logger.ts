@@ -1,7 +1,8 @@
-import { Middleware } from "@reduxjs/toolkit";
+import { Action, Dispatch, MiddlewareAPI } from "@reduxjs/toolkit";
   
  
-const logger: Middleware = store  =>  next =>  action  => {
+const logger  = (params:any) => (store:MiddlewareAPI)  =>  (next:Dispatch) =>  (action:Action)  => {
+    console.log("Logging:", params);
     console.log("store:", store);
     console.log("next:", next);
     console.log("action:", action);

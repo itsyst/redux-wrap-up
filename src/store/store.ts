@@ -9,7 +9,7 @@ import logger  from './middleware/logger'
 const store = configureStore(
     {
         reducer: reducer,
-        middleware: [logger],
+        middleware: [logger({destination: "dev"})],
     },
 );
 
