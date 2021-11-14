@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducer';
 import logger from './middleware/logger';
 import toast from './middleware/toast';
+import api from './middleware/api';
 
 
 // Middleware without redux toolkit
@@ -9,7 +10,7 @@ import toast from './middleware/toast';
 
 const store = configureStore({
     reducer: reducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger({ destination: "dev" }), toast),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger({ destination: "dev" }), toast,api),
     devTools: process.env.NODE_ENV !== 'production'
 });
 

@@ -39,12 +39,22 @@ import { addProject } from './store/projects';
 // });
 
 // Dispatch a toast notification
-store.dispatch({
-    type: "error",
-    payload: { message: "An error occurred." }
-});
+// store.dispatch({
+//     type: "error",
+//     payload: { message: "An error occurred." }
+// });
 
 
+const action = {
+    type: 'apiRequest',
+    payload: {
+        url: '/bugs',
+        onSuccess: 'bugsReceived',
+        onError: 'apiRequestFailed'
+    }
+}
+
+store.dispatch(action);
 
 // unsubscribe();
 
