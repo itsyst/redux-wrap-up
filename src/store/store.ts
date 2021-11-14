@@ -1,15 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducer';
 import logger from './middleware/logger';
-import func from './middleware/func';
-
+ 
 
 // Middleware without redux toolkit
 // const store = createStore({ reducer, applyMiddleware(logger) });
 
 const store = configureStore({
     reducer: reducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger({ destination: "dev" }), func),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger({ destination: "dev" })),
     devTools: process.env.NODE_ENV !== 'production'
 });
 

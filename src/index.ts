@@ -18,20 +18,24 @@ import { addProject } from './store/projects';
 store.dispatch(addUser({ name: "User 1" }));
 // store.dispatch(addUser({ name: "User 2" }));
 
-// store.dispatch(addBug({ description: "Bug - 0001" }));
-// store.dispatch(addBug({ description: "Bug - 0002" }));
+store.dispatch(addBug({ description: "Bug - 0001" }));
+store.dispatch(addBug({ description: "Bug - 0002" }));
 // store.dispatch(addBug({ description: "Bug - 0003" }));
 // store.dispatch(addBug({ description: "Bug - 0004" }));
-// store.dispatch(resolveBug({ id: 2 }));
+store.dispatch(resolveBug({ id: 2 }));
 // store.dispatch(removeBug({ id: 3 }));
 
-// store.dispatch(addProject({ name: "Project1" }))
+store.dispatch(addProject({ name: "Project1" }))
 
-// store.dispatch(assignBugToUser({ bugId: 2, userId: 1}));
+store.dispatch(assignBugToUser({ bugId: 2, userId: 1}));
 
 // Dispatch a function
-store.dispatch(() => {
-    store.dispatch({ type: 'RECEIVED_BUG', bugs: [1, 2, 3] })
+store.dispatch((dispatch, getState) => {
+    // Call an API
+    // When the promise is resolved => dispatch()
+    dispatch({ type: 'RECEIVED_BUG', bugs: [1, 2, 3] })
+    console.log(getState())
+    // if the promise is rejected => dispatch()
 });
 
 
