@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice} from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import { RootState } from "./store";
 
@@ -14,33 +14,37 @@ let lastId = 0;
 
 const bugSlice = createSlice({
     name: 'bugs',
-    initialState: [],
+    initialState: {
+        list: [],
+        loading: false,
+        lastFetch:null
+    },
     reducers: {
         // actions => action handlers
 
-        assignBugToUser: (bugs: Bug[], action) => {
+        assignBugToUser: (bugs , action) => {
             const { userId, bugId } = action.payload;
-            const index = bugs.findIndex(bug => bug.id === bugId);
-            bugs[index].userId = userId;
+            const index = bugs.list.findIndex(bug => bug.id === bugId);
+            bugs.list[index].userId = userId;
         },
 
-        addBug: (bugs: Bug[], action) => {
-            bugs.push({
+        addBug: (bugs , action) => {
+            bugs.list.push({
                 id: ++lastId,
                 description: action.payload.description,
                 resolved: false
              })
         },
 
-        resolveBug: (bugs: Bug[], action) => {
-            const index = bugs.findIndex((bug: Bug) => bug.id === action.payload.id);
-            bugs[index].resolved = true;
+        resolveBug: (bugs , action) => {
+            const index = bugs.list.findIndex((bug: Bug) => bug.id === action.payload.id);
+            bugs.list[index].resolved = true;
 
         },
 
-        removeBug: (bugs: Bug[], action) => {
-            const index = bugs.findIndex((bug: Bug) => bug.id === action.payload.id);
-            bugs.splice(index, 1);
+        removeBug: (bugs , action) => {
+            const index = bugs.list.findIndex((bug: Bug) => bug.id === action.payload.id);
+            bugs.list.splice(index, 1);
         }
 
     },
@@ -57,12 +61,12 @@ export default bugSlice.reducer
 export const unresolvedBugsSelector = createSelector(
     (state: RootState) => state.entities.bugs,
     (state: RootState) => state.entities.projects,
-    (bugs: Bug[]) => bugs.filter((bug: Bug) => !bug.resolved)
+    (bugs ) => bugs.list.filter((bug: Bug) => !bug.resolved)
 )
 
 export const bugsByUserSelector = (userId: number)=> createSelector(
     (state: RootState) => state.entities.bugs,
-    (bugs: Bug[]) => bugs.filter((bug: Bug) => bug.userId === userId)
+    (bugs ) => bugs.list.filter((bug: Bug) => bug.userId === userId)
 )
 
 const bugsSelector = (state: RootState) => state.entities.bugs
@@ -71,6 +75,6 @@ const projectsSelector = (state: RootState) => state.entities.projects
 // The result function in the following selector
 // is simply building an object from the input selectors
 export const structuredSelector = createSelector(bugsSelector, projectsSelector, (bugs, projects) => ({
-    bugs: bugs.filter((bug: Bug) => !bug.resolved),
+    bugs: bugs.list.filter((bug: Bug) => !bug.resolved),
     projects: projects.filter((project: any) => !project.resolved)
 }))
