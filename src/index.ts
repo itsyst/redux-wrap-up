@@ -1,15 +1,16 @@
 import store from './store/store'
-import {
-    addBug,
-    resolveBug,
-    removeBug,
-    assignBugToUser,
-    unresolvedBugsSelector,
-    bugsByUserSelector,
-    structuredSelector
-} from './store/bugs';
-import { addUser } from './store/users';
-import { addProject } from './store/projects';
+// import {
+//     addBug,
+//     resolveBug,
+//     removeBug,
+//     assignBugToUser,
+//     unresolvedBugsSelector,
+//     bugsByUserSelector,
+//     structuredSelector
+// } from './store/bugs';
+// import { addUser } from './store/users';
+// import { addProject } from './store/projects';
+import * as actions from "./store/apiActions"
 
 // const unsubscribe = store.subscribe(() => {
 //     console.log("Store changed!", store.getState());
@@ -45,16 +46,19 @@ import { addProject } from './store/projects';
 // });
 
 
-const action = {
-    type: 'apiRequest',
-    payload: {
-        url: '/bugs',
-        onSuccess: 'bugsReceived',
-        onError: 'apiRequestFailed'
-    }
-}
+// const action = {
+//     type: actions.apiCallBegan,
+//     payload: {
+//         url: '/bugs',
+//         onSuccess: actions.apiCallSuccess,
+//         onError: actions.apiCallFailed
+//     }
+// }
 
-store.dispatch(action);
+store.dispatch(actions.apiCallBegan({
+    url: '/bugs',
+    onSuccess: "bugsReceived"
+}));
 
 // unsubscribe();
 
