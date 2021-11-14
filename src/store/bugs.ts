@@ -1,5 +1,6 @@
-import { createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
+import { apiCallBegan } from './apiActions';
 import { RootState } from "./store";
 
 interface Bug {
@@ -17,41 +18,53 @@ const bugSlice = createSlice({
     initialState: {
         list: [],
         loading: false,
-        lastFetch:null
+        lastFetch: null
     },
     reducers: {
         // actions => action handlers
 
-        assignBugToUser: (bugs , action) => {
+        assignBugToUser: (bugs, action) => {
             const { userId, bugId } = action.payload;
             const index = bugs.list.findIndex(bug => bug.id === bugId);
             bugs.list[index].userId = userId;
         },
 
-        addBug: (bugs , action) => {
+        addBug: (bugs, action) => {
             bugs.list.push({
                 id: ++lastId,
                 description: action.payload.description,
                 resolved: false
-             })
+            })
         },
 
-        resolveBug: (bugs , action) => {
+        resolveBug: (bugs, action) => {
             const index = bugs.list.findIndex((bug: Bug) => bug.id === action.payload.id);
             bugs.list[index].resolved = true;
 
         },
 
-        removeBug: (bugs , action) => {
+        removeBug: (bugs, action) => {
             const index = bugs.list.findIndex((bug: Bug) => bug.id === action.payload.id);
             bugs.list.splice(index, 1);
+        },
+
+        receivedBugs: (bugs, action) => {
+            bugs.list = action.payload
         }
 
     },
 })
 
-export const { addBug, resolveBug, removeBug, assignBugToUser} = bugSlice.actions
+export const { addBug, resolveBug, removeBug, assignBugToUser, receivedBugs } = bugSlice.actions
 export default bugSlice.reducer
+
+// Action Creators
+const url = "/bugs";
+
+export const loadBugs = () => apiCallBegan({
+    url: url,
+    onSuccess: receivedBugs.type
+})
 
 // Selector function
 //export const unresolvedBugsSelector = (state:any) => state.entities.bugs.filter((bug:any) => !bug.resolved);
@@ -61,12 +74,12 @@ export default bugSlice.reducer
 export const unresolvedBugsSelector = createSelector(
     (state: RootState) => state.entities.bugs,
     (state: RootState) => state.entities.projects,
-    (bugs ) => bugs.list.filter((bug: Bug) => !bug.resolved)
+    (bugs) => bugs.list.filter((bug: Bug) => !bug.resolved)
 )
 
-export const bugsByUserSelector = (userId: number)=> createSelector(
+export const bugsByUserSelector = (userId: number) => createSelector(
     (state: RootState) => state.entities.bugs,
-    (bugs ) => bugs.list.filter((bug: Bug) => bug.userId === userId)
+    (bugs) => bugs.list.filter((bug: Bug) => bug.userId === userId)
 )
 
 const bugsSelector = (state: RootState) => state.entities.bugs

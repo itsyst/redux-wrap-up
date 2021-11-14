@@ -10,7 +10,7 @@ import store from './store/store'
 // } from './store/bugs';
 // import { addUser } from './store/users';
 // import { addProject } from './store/projects';
-import * as actions from "./store/apiActions"
+import { loadBugs } from './store/bugs';
 
 // const unsubscribe = store.subscribe(() => {
 //     console.log("Store changed!", store.getState());
@@ -55,10 +55,7 @@ import * as actions from "./store/apiActions"
 //     }
 // }
 
-store.dispatch(actions.apiCallBegan({
-    url: '/bugs',
-    onSuccess: "bugsReceived"
-}));
+store.dispatch(loadBugs());
 
 // unsubscribe();
 
