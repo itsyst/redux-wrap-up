@@ -49,13 +49,31 @@ const bugSlice = createSlice({
         },
 
         receivedBugs: (bugs, action) => {
-            bugs.list = action.payload
+            bugs.list = action.payload;
+            bugs.loading = false;
+        },
+
+        requestBugs: (bugs, action) => {
+            bugs.loading = true;
+        },
+
+        requestBugsFailed: (bugs, action) => {
+            bugs.loading = false;
         }
 
     },
 })
 
-export const { addBug, resolveBug, removeBug, assignBugToUser, receivedBugs } = bugSlice.actions
+export const {
+    addBug,
+    resolveBug,
+    removeBug,
+    assignBugToUser,
+    receivedBugs,
+    requestBugs,
+    requestBugsFailed
+} = bugSlice.actions
+
 export default bugSlice.reducer
 
 // Action Creators
@@ -63,7 +81,9 @@ const url = "/bugs";
 
 export const loadBugs = () => apiCallBegan({
     url: url,
-    onSuccess: receivedBugs.type
+    onStart: requestBugs.type,
+    onSuccess: receivedBugs.type,
+    onError: requestBugsFailed.type
 })
 
 // Selector function
