@@ -57,6 +57,12 @@ import { loadBugs } from './store/bugs';
 
 store.dispatch(loadBugs());
 
+
+// Try to reload bugs - cache previous call
+setInterval(() => {
+    store.dispatch(loadBugs());
+}, 2000)
+
 // unsubscribe();
 
 // console.log(store.getState());

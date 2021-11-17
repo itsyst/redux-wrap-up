@@ -12,9 +12,9 @@ const api: Middleware = ({ dispatch, getState }) => (next: Dispatch) => async (a
 
     try {
         const response = await axios.request({
-            baseURL: 'http://localhost:3009/api',
+            baseURL: 'http://localhost:3000/api',
             url,
-            method,
+            method, 
             data,
         });
         // General
