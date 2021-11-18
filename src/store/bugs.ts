@@ -7,13 +7,13 @@ import { RootState } from "./store";
 
 interface Bug {
     id: number,
-    description: string,
-    resolved: boolean,
+    description?: string,
+    resolved?: boolean,
     userId?: number
 }
 
 // Initialize bug id
-let lastId = 0;
+// let lastId = 0;
 
 const bugSlice = createSlice({
     name: 'bugs',
@@ -33,11 +33,7 @@ const bugSlice = createSlice({
         },
 
         addBug: (bugs, action) => {
-            bugs.list.push({
-                id: ++lastId,
-                description: action.payload.description,
-                resolved: false
-            })
+            bugs.list.push(action.payload)
         },
 
         resolveBug: (bugs, action) => {
@@ -98,6 +94,15 @@ export const loadBugs = () => (dispatch: Dispatch, getState: any) => {
         })
     )
 }
+
+export const addNewBug = (bug: any) => apiCallBegan({
+    url: url,
+    method: 'post',
+    data: bug,
+    onSuccess: addBug.type,
+})
+
+
 
 // Old implementation
 // export const loadBugs = () => apiCallBegan({

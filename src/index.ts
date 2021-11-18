@@ -10,7 +10,7 @@ import store from './store/store'
 // } from './store/bugs';
 // import { addUser } from './store/users';
 // import { addProject } from './store/projects';
-import { loadBugs } from './store/bugs';
+import { addNewBug, loadBugs } from './store/bugs';
 
 // const unsubscribe = store.subscribe(() => {
 //     console.log("Store changed!", store.getState());
@@ -55,13 +55,14 @@ import { loadBugs } from './store/bugs';
 //     }
 // }
 
-store.dispatch(loadBugs());
-
+store.dispatch(addNewBug({description: "New bug."}));
+// store.dispatch(loadBugs());
+ 
 
 // Try to reload bugs - cache previous call
-setInterval(() => {
-    store.dispatch(loadBugs());
-}, 2000)
+// setInterval(() => {
+//     store.dispatch(loadBugs());
+// }, 2000)
 
 // unsubscribe();
 
