@@ -26,51 +26,53 @@ const bugSlice = createSlice({
     reducers: {
         // actions => action handlers
 
-        assignBugToUser: (bugs, action) => {
+        bugAssignedToUser: (bugs, action) => {
             const { userId, bugId } = action.payload;
             const index = bugs.list.findIndex(bug => bug.id === bugId);
             bugs.list[index].userId = userId;
         },
 
-        addBug: (bugs, action) => {
+        // command - event
+        // addBug - bugAdded
+        bugAdded: (bugs, action) => {
             bugs.list.push(action.payload)
         },
 
-        resolveBug: (bugs, action) => {
+        bugResolved: (bugs, action) => {
             const index = bugs.list.findIndex((bug: Bug) => bug.id === action.payload.id);
             bugs.list[index].resolved = true;
 
         },
 
-        removeBug: (bugs, action) => {
+        bugRemoved: (bugs, action) => {
             const index = bugs.list.findIndex((bug: Bug) => bug.id === action.payload.id);
             bugs.list.splice(index, 1);
         },
 
-        receivedBugs: (bugs, action) => {
+        bugsReceived: (bugs, action) => {
             bugs.list = action.payload;
             bugs.loading = false;
             bugs.lastFetch = Date.now();
         },
 
-        requestBugs: (bugs, action) => {
+        bugsRequested: (bugs, action) => {
             bugs.loading = true;
         },
 
-        requestBugsFailed: (bugs, action) => {
+        bugsRequestedFailed: (bugs, action) => {
             bugs.loading = false;
         }
     },
 })
 
 export const {
-    addBug,
-    resolveBug,
-    removeBug,
-    assignBugToUser,
-    receivedBugs,
-    requestBugs,
-    requestBugsFailed
+    bugAdded,
+    bugResolved,
+    bugRemoved,
+    bugAssignedToUser,
+    bugsReceived,
+    bugsRequested,
+    bugsRequestedFailed
 } = bugSlice.actions
 
 export default bugSlice.reducer
@@ -88,28 +90,34 @@ export const loadBugs = () => (dispatch: Dispatch, getState: any) => {
     dispatch(
         apiCallBegan({
             url: url,
-            onStart: requestBugs.type,
-            onSuccess: receivedBugs.type,
-            onError: requestBugsFailed.type
+            onStart: bugsRequested.type,
+            onSuccess: bugsReceived.type,
+            onError: bugsRequestedFailed.type
         })
     )
 }
 
-export const addNewBug = (bug: any) => apiCallBegan({
+export const addBug = (bug: any) => apiCallBegan({
     url: url,
     method: 'post',
     data: bug,
-    onSuccess: addBug.type,
+    onSuccess: bugAdded.type,
 })
 
+export const resolveBug = (id: any) => apiCallBegan({
+    url: url + '/' + id,
+    method: 'patch',
+    data: { resolved: true },
+    onSuccess: bugResolved.type,
+})
 
 
 // Old implementation
 // export const loadBugs = () => apiCallBegan({
 //  url: url,
-//  onStart: requestBugs.type,
-//  onSuccess: receivedBugs.type,
-//  onError: requestBugsFailed.type
+//  onStart: bugsRequested.type,
+//  onSuccess: bugsReceived.type,
+//  onError: bugsRequestedFailed.type
 // })
 
 // Selector function
