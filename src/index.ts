@@ -10,7 +10,7 @@ import store from './store/store'
 // } from './store/bugs';
 // import { addUser } from './store/users';
 // import { addProject } from './store/projects';
-import { addBug, loadBugs, resolveBug } from './store/bugs';
+import { addBug, assignBugToUser, loadBugs, resolveBug } from './store/bugs';
 
 // const unsubscribe = store.subscribe(() => {
 //     console.log("Store changed!", store.getState());
@@ -59,6 +59,8 @@ store.dispatch(loadBugs());
 store.dispatch(addBug({ description: "New bug." }));
 
 store.dispatch(resolveBug(2));
+
+store.dispatch(assignBugToUser(4,1));
  
 
 // Try to reload bugs - cache previous call
