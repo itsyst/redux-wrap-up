@@ -1,10 +1,18 @@
-import {  Action, Dispatch, Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
+type MiddlewareAPI = {
+    dispatch: (action: unknown) => unknown;
+    getState: () => unknown;
+};
 
-// Thunk already built middleware in redux/toolkit
-const func: Middleware = ({dispatch, getState}) => (next: Dispatch) => (action: Action | any ) => {
-    typeof action === 'function'
-        ? action(dispatch, getState)
-        : next(action)
+const func = ({dispatch, getState}: MiddlewareAPI) => (next: (action: unknown) => unknown) => (action: unknown) => {
+    if (typeof action === 'function')
+        action(dispatch, getState)
+    else
+        next(action);
 }
  
-export default func
+export default func;
+
+
+
+
+ 
