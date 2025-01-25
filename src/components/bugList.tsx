@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import { MdDelete, MdEditSquare } from 'react-icons/md';
-import { removeBug, updateBug, Bug, BugState } from '../store/entities/bugs';
-import { getUsers, UserState } from '../store/entities/users';
+import { useSelector } from 'react-redux';
+import { Bug, BugState, removeBug, updateBug } from '../store/entities/bugs';
+import { UserState } from '../store/entities/users';
 import store from '../store/store';
 import Spinner from './spinner';
 
@@ -12,10 +12,6 @@ const BugList = () => {
 
 	const [editingBugId, setEditingBugId] = useState<string | null>(null);
 	const [editedBug, setEditedBug] = useState<Partial<Bug>>({});
-
-	useEffect(() => {
-		store.dispatch(getUsers());
-	}, []);
 
 	const handleDeleteBug = (bugId: string) => {
 		store.dispatch(removeBug(bugId));
