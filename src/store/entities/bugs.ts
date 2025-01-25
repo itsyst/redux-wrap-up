@@ -40,7 +40,7 @@ const slice = createSlice({
                 state.list[index].userId = userId
         },
         bugAdded: (state, action) => {
-            state.list.push(action.payload.data);
+            state.list.unshift(action.payload.data);
         },
         bugResolved: (state, action) => {
             const bug = state.list.find((bug) => bug.id === action.payload.data.id);
