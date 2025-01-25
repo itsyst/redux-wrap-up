@@ -16,4 +16,7 @@ export default defineConfig({
     outDir: 'dist', // Output directory for production builds
     assetsDir: 'assets', // Directory for static assets in production
   },
+  define: {
+    'process.env': {} // Correct set up to handle environment variables
+  }
 })
