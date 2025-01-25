@@ -1,23 +1,19 @@
-import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { addBug } from '../store/entities/bugs';
-import store from '../store/store';
+import { useState } from 'react';
 
-const BugAdd: React.FC = () => {
+interface BugAddProps {
+	handleAddBug: (description: string) => void;
+}
+
+const BugAdd: React.FC<BugAddProps> = ({ handleAddBug }) => {
 	const [newBugDescription, setNewBugDescription] = useState('');
 
-	const handleAddBug = () => {
+	const onAddClick = () => {
 		if (newBugDescription.trim()) {
-			store.dispatch(
-				addBug({
-					id: uuidv4(),
-					description: newBugDescription,
-					reportedAt: new Date().toLocaleDateString(),
-					resolved: false
-				})
-			);
+			handleAddBug(newBugDescription); // Call handleAddBug from parent
 			setNewBugDescription('');
 		}
+
+		console.log(newBugDescription);
 	};
 
 	return (
@@ -30,7 +26,7 @@ const BugAdd: React.FC = () => {
 				onChange={(e) => setNewBugDescription(e.target.value)}
 			/>
 			<button
-				onClick={handleAddBug}
+				onClick={onAddClick}
 				className="btn btn-primary text-nowrap ms-2 mt-sm-0"
 			>
 				Add Bug
