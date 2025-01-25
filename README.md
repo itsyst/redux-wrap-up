@@ -109,6 +109,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 Here’s a screenshot of the application in action:
 
 <a href="https://github.com/itsyst/redux-wrap-up">
- <img src="(https://github.com/itsyst/redux-wrap-up/blob/master/src/assets/light-mode.png)" alt="home" border="0"> 
- <img src="(https://github.com/itsyst/redux-wrap-up/blob/master/src/assets/dark-mode.png)" alt="filter" border="0"> 
+ <img src="https://github.com/itsyst/redux-wrap-up/blob/master/src/assets/light-mode.png" alt="home" border="0"> 
+ <img src="https://github.com/itsyst/redux-wrap-up/blob/master/src/assets/dark-mode.png" alt="filter" border="0"> 
 </a>
