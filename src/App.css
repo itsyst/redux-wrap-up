@@ -1,42 +1,125 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body,
+html {
+	background: linear-gradient(45deg, #6a11cb, #2575fc); /* Gradient background */
+	background-attachment: fixed; /* Fixed background for a nice scrolling effect */
+	font-family: 'Roboto', sans-serif; /* Modern, clean font */
+	color: #fff;
+	margin: 0;
+	padding: 0;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	padding: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.header {
+	text-align: center;
+	padding: 20px;
+	margin-bottom: 30px;
+	background: rgba(255, 255, 255, 0.1); /* Light semi-transparent background */
+	border-radius: 15px;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+	width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.header h1 {
+	font-size: 3rem;
+	text-transform: uppercase;
+	font-weight: bold;
+	letter-spacing: 2px;
 }
 
-.card {
-  padding: 2em;
+.bug-list-container {
+	width: 100%;
+	background: rgba(255, 255, 255, 0.1); /* Light semi-transparent background */
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Card-like effect */
+	margin-top: 20px;
+	overflow: scroll;
 }
 
-.read-the-docs {
-  color: #888;
+.table {
+	width: 100%;
+	margin-top: 20px;
+	border-radius: 10px;
+	overflow: hidden; /* Ensure no table edges overflow */
+}
+
+.table thead {
+	background-color: #2575fc; /* Blue gradient for table header */
+	color: #fff;
+	text-transform: uppercase;
+}
+
+.table tbody {
+	background-color: #fff;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+	background-color: #f8f9fa; /* Zebra striping effect */
+}
+
+.table-striped tbody tr:nth-child(even) {
+	background-color: #ffffff;
+}
+
+.table-hover tbody tr:hover {
+	background-color: #e9f3fe; /* Hover effect */
+}
+
+button:focus {
+	outline: none;
+}
+
+input[type='text'] {
+	border-radius: 5px;
+	padding: 10px;
+	font-size: 1rem;
+	border: 1px solid #ccc;
+	margin-right: 10px;
+	width: 100%;
+}
+
+input[type='text']:focus {
+	border-color: #2575fc; /* Focus color */
+	outline: none;
+}
+
+@media screen and (max-width: 768px) {
+	.header h1 {
+		font-size: 2rem; /* Adjust title size for smaller screens */
+	}
+
+	.bug-list-container {
+		padding: 15px;
+	}
+
+	.table th,
+	.table td {
+		font-size: 0.9rem; /* Smaller font size for better mobile view */
+	}
+}
+
+/* Dark mode */
+.dark-mode {
+	background: #121212; /* Dark background */
+	color: #e0e0e0; /* Light text color */
+}
+
+.dark-mode .header {
+	background: rgba(255, 255, 255, 0.2);
+}
+
+.dark-mode .table {
+	background-color: #333;
+}
+
+.dark-mode .table thead {
+	background-color: #2575fc;
 }
