@@ -1,12 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
+import { LuMoon, LuSun } from 'react-icons/lu';
 import { useDispatch } from 'react-redux';
 import './App.css';
-import BugList from './components/bugList';
+import BugList from './components/bugs/bugList';
 import { getBugs } from './store/entities/bugs';
 import { getUsers } from './store/entities/users';
 import store from './store/store';
-import { LuMoon, LuSun } from 'react-icons/lu';
 
 function App() {
 	const dispatch = useDispatch();

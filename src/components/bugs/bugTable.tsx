@@ -1,7 +1,7 @@
 import { Droppable } from '@hello-pangea/dnd';
 import BugRow from './bugRow';
-import { Bug } from '../store/entities/bugs';
-import { UserState } from '../store/entities/users';
+import { Bug } from '../../store/entities/bugs';
+import { UserState } from '../../store/entities/users';
 
 interface BugTableProps {
 	bugs: Bug[];

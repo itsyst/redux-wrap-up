@@ -8,12 +8,12 @@ import {
 	BugState,
 	removeBug,
 	updateBug
-} from '../store/entities/bugs';
-import { UserState } from '../store/entities/users';
-import store from '../store/store';
+} from '../../store/entities/bugs';
+import { UserState } from '../../store/entities/users';
+import store from '../../store/store';
 import BugAdd from './bugAdd';
 import BugTable from './bugTable';
-import Spinner from './spinner';
+import Spinner from '../common/spinner';
 
 const BugList = () => {
 	const bugs = useSelector((state: BugState) => state.entities.bugs.list);
