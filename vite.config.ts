@@ -1,9 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import EnvironmentPlugin from "vite-plugin-environment"
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), EnvironmentPlugin([
+    'VITE_BASE_URL_API',
+    'VITE_BASE_USERS_URL_API'
+  ])],
   resolve: {
     alias: {
       '@': '/src', // Optional: Adds a shorthand alias for importing from the src directory
@@ -17,6 +21,7 @@ export default defineConfig({
     assetsDir: 'assets', // Directory for static assets in production
   },
   define: {
-    'process.env': {} // Correct set up to handle environment variables
+    'process.env': {},
+    __APP_ENV__: JSON.stringify(process.env), // Global access to environment variables
   }
 })

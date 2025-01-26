@@ -12,9 +12,9 @@ import {
 } from '../../store/entities/bugs';
 import { getUsers, UserState } from '../../store/entities/users';
 import store from '../../store/store';
+import Spinner from '../common/spinner';
 import BugAdd from './bugAdd';
 import BugTable from './bugTable';
-import Spinner from '../common/spinner';
 
 const BugList = () => {
 	const bugs = useSelector((state: BugState) => state.entities.bugs.list);
@@ -33,10 +33,9 @@ const BugList = () => {
 			setDraggedBugs(bugs);
 		}
 		store.dispatch(getBugs());
-		if (bugs.length > 0)
-			store.dispatch(getUsers());
+		if (bugs.length > 0) store.dispatch(getUsers());
 	}, [bugs]);
- 
+
 	// Save draggedBugs to localStorage whenever it changes
 	useEffect(() => {
 		if (draggedBugs.length) {
@@ -91,7 +90,7 @@ const BugList = () => {
 		});
 	};
 
-	const handleAddBug = (description: string) => {
+	const handleAddBug = async (description: string) => {
 		if (description.trim()) {
 			const newBug: Bug = {
 				id: uuidv4(),
@@ -101,7 +100,7 @@ const BugList = () => {
 				reportedAt: new Date().toLocaleDateString(),
 				resolved: false
 			};
-			store.dispatch(addBug(newBug));
+			await store.dispatch(addBug(newBug));
 			const newDraggedBugs = [newBug, ...draggedBugs];
 			setDraggedBugs(newDraggedBugs);
 			localStorage.setItem('draggedBugs', JSON.stringify(newDraggedBugs));
