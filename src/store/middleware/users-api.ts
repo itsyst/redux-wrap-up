@@ -13,7 +13,7 @@ interface ApiAction {
         onError: string;
     }
 }
-
+ 
 const usersApi = ({ dispatch }: { dispatch: Dispatch }) => (next: (action: Action) => unknown) => async (action: Action) => {
     if (action.type !== actions.apiCallStarted.type) return next(action);
 
@@ -24,7 +24,7 @@ const usersApi = ({ dispatch }: { dispatch: Dispatch }) => (next: (action: Actio
     next(action);
 
     await axios.request({
-        baseURL: import.meta.env.VITE_BASE_USERS_URL_API,
+        baseURL: process.env.VITE_BASE_USERS_URL_API,
         url,
         method,
         data
