@@ -13,18 +13,18 @@ interface ApiAction {
         onError: string;
     }
 }
-
+ 
 const bugsApi = ({ dispatch }: { dispatch: Dispatch }) => (next: (action: Action) => unknown) => async (action: Action) => {
     if (action.type !== actions.apiCallStarted.type) return next(action);
-    
+
     const { url, method, data, onStart, onSuccess, onError } = (action as ApiAction).payload;
 
     if (onStart) dispatch({ type: onStart });
 
     next(action);
-    
+
     await axios.request({
-        baseURL: import.meta.env.VITE_BASE_URL_API,
+        baseURL: process.env.VITE_BASE_URL_API,
         url,
         method,
         data
