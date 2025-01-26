@@ -81,7 +81,7 @@ const slice = createSlice({
 })
 
 // Action Creators
-export const { bugAdded, bugResolved, bugRemoved, bugAssignedUser, bugsReceived, bugsRequested, bugsRequestFailed } = slice.actions;
+const { bugAdded, bugResolved, bugRemoved, bugAssignedUser, bugsReceived, bugsRequested, bugsRequestFailed } = slice.actions;
 
 const url = '/bugs'
 export const getBugs = () => (dispatch: Dispatch, getState: () => BugState) => {
@@ -113,7 +113,7 @@ export const updateBug = (bug: Partial<Bug>) => (dispatch: Dispatch) => {
         method: "patch",
         data: bug, // Include the bug data in the POST request
         onStart: bugsRequested.type,
-        onSuccess: bugResolved.type,
+        onSuccess: bugResolved.type || bugAssignedUser,
         onError: bugsRequestFailed.type
     }));
 };

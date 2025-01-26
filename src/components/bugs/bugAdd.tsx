@@ -12,8 +12,6 @@ const BugAdd: React.FC<BugAddProps> = ({ handleAddBug }) => {
 			handleAddBug(newBugDescription); // Call handleAddBug from parent
 			setNewBugDescription('');
 		}
-
-		console.log(newBugDescription);
 	};
 
 	return (

@@ -20,6 +20,7 @@ const slice = createSlice({
         },
         usersReceived: (state, action) => {
             state.list = action.payload.data;
+            state.loading = false;
         },
         usersRequestFailed: (state) => {
             state.loading = false;
@@ -28,7 +29,7 @@ const slice = createSlice({
 });
 
 // Action Creators
-export const { usersRequested, usersReceived, usersRequestFailed } = slice.actions;
+const { usersRequested, usersReceived, usersRequestFailed } = slice.actions;
 
 const url = '/users'
 export const getUsers = () => (dispatch: Dispatch) => {
