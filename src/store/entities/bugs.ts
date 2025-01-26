@@ -97,14 +97,19 @@ export const getBugs = () => (dispatch: Dispatch, getState: () => BugState) => {
 };
 
 export const addBug = (bug: Bug) => (dispatch: Dispatch) => {
-    dispatch(apiCallStarted({
-        url: url,
+    const action = apiCallStarted({
+        url: '/bugs',
         method: "post",
-        data: bug, // Include the bug data in the POST request
+        data: bug,
         onStart: bugsRequested.type,
         onSuccess: bugAdded.type,
         onError: bugsRequestFailed.type
-    }));
+    });
+
+    dispatch(action);
+
+    // Return the action with a promise wrapper
+    return Promise.resolve(action);
 };
 
 export const updateBug = (bug: Partial<Bug>) => (dispatch: Dispatch) => {
