@@ -6,10 +6,11 @@ import {
 	addBug,
 	Bug,
 	BugState,
+	getBugs,
 	removeBug,
 	updateBug
 } from '../../store/entities/bugs';
-import { UserState } from '../../store/entities/users';
+import { getUsers, UserState } from '../../store/entities/users';
 import store from '../../store/store';
 import BugAdd from './bugAdd';
 import BugTable from './bugTable';
@@ -31,8 +32,11 @@ const BugList = () => {
 		} else {
 			setDraggedBugs(bugs);
 		}
+		store.dispatch(getBugs());
+		if (bugs.length > 0)
+			store.dispatch(getUsers());
 	}, [bugs]);
-
+ 
 	// Save draggedBugs to localStorage whenever it changes
 	useEffect(() => {
 		if (draggedBugs.length) {

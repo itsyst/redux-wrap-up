@@ -1,25 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { LuMoon, LuSun } from 'react-icons/lu';
-import { useDispatch } from 'react-redux';
 import './App.css';
 import BugList from './components/bugs/bugList';
-import { getBugs } from './store/entities/bugs';
-import { getUsers } from './store/entities/users';
-import store from './store/store';
 
 function App() {
-	const dispatch = useDispatch();
-	const [isDarkMode, setIsDarkMode] = useState(false);
+ 	const [isDarkMode, setIsDarkMode] = useState(false);
 
 	const toggleDarkMode = () => {
 		setIsDarkMode(!isDarkMode);
 	};
-	useEffect(() => {
-		store.dispatch(getBugs());
-		store.dispatch(getUsers());
-	}, [dispatch]);
-
+ 
 	return (
 		<div className={isDarkMode ? 'app-container dark-mode' : 'app-container'}>
 			<div className="header d-flex justify-content-between align-items-center">

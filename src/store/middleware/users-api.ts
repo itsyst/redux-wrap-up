@@ -1,13 +1,14 @@
 import { Action, Dispatch } from "@reduxjs/toolkit";
 import axios from "axios";
 import * as actions from "../constants/api-users-constants";
- 
+
 interface ApiAction {
     type: string;
     payload: {
         url: string;
         method: string;
         data?: unknown;
+        onStart: string;
         onSuccess: string;
         onError: string;
     }
@@ -16,7 +17,9 @@ interface ApiAction {
 const usersApi = ({ dispatch }: { dispatch: Dispatch }) => (next: (action: Action) => unknown) => async (action: Action) => {
     if (action.type !== actions.apiCallStarted.type) return next(action);
 
-    const { url, method, data, onSuccess, onError } = (action as ApiAction).payload;
+    const { url, method, data, onStart, onSuccess, onError } = (action as ApiAction).payload;
+
+    if (onStart) dispatch({ type: onStart });
 
     next(action);
 

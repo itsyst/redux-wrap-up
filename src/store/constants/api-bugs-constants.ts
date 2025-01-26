@@ -1,6 +1,6 @@
 import { createAction } from "@reduxjs/toolkit";
 
-export const apiCallStarted = createAction('api/bugs/callStarted',
+export const apiCallStarted = createAction('bugs/APICallStarted',
     (payload: {
         url: string;
         onStart: string;
@@ -13,7 +13,7 @@ export const apiCallStarted = createAction('api/bugs/callStarted',
     })
 );
 
-export const apiCallSuccess = createAction("api/bugs/CallSuccess",
+export const apiCallSuccess = createAction("bugs/APICallSuccess",
     (payload: {
         url: string;
         onStart: string;
@@ -26,7 +26,7 @@ export const apiCallSuccess = createAction("api/bugs/CallSuccess",
     })
 );
 
-export const apiCallFailed = createAction("api/bugs/CallFailed",
+export const apiCallFailed = createAction("bugs/APICallFailed",
     (payload: {
         url: string;
         onStart: string;
