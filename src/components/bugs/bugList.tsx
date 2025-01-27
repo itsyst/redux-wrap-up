@@ -95,7 +95,7 @@ const BugList = () => {
 			const newBug: Bug = {
 				id: uuidv4(),
 				severity: 'Minor',
-				description,
+				description: description,
 				priority: 'Low',
 				reportedAt: new Date().toLocaleDateString(),
 				resolved: false
