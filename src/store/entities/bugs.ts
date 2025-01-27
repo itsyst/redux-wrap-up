@@ -4,7 +4,7 @@ import { cachedAPIRequest } from "../utils/cache";
 
 export interface Bug {
     id: string;
-    description?: string;
+    description: string;
     resolved?: boolean;
     userId?: number;
     priority?: string;
@@ -41,6 +41,7 @@ const slice = createSlice({
         },
         bugAdded: (state, action) => {
             state.list.unshift(action.payload.data);
+            state.loading = false;
         },
         bugResolved: (state, action) => {
             const bug = state.list.find((bug) => bug.id === action.payload.data.id);
@@ -95,7 +96,7 @@ export const getBugs = () => (dispatch: Dispatch, getState: () => BugState) => {
             onError: bugsRequestFailed.type
         }));
     });
-};
+ };
 
 export const addBug = (bug: Bug) => (dispatch: Dispatch) => {
     const action = apiCallStarted({
@@ -108,7 +109,7 @@ export const addBug = (bug: Bug) => (dispatch: Dispatch) => {
     });
 
     dispatch(action);
-
+ 
     // Return the action with a promise wrapper
     return Promise.resolve(action);
 };

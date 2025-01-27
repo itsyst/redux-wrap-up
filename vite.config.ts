@@ -23,5 +23,5 @@ export default defineConfig({
   define: {
     'process.env': {},
     __APP_ENV__: JSON.stringify(process.env), // Global access to environment variables
-  }
+  },
 })
