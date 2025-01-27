@@ -84,8 +84,9 @@ const slice = createSlice({
 const { bugAdded, bugResolved, bugRemoved, bugAssignedUser, bugsReceived, bugsRequested, bugsRequestFailed } = slice.actions;
 
 const url = '/bugs'
+const cacheTime = 10 // 10 minutes
 export const getBugs = () => (dispatch: Dispatch, getState: () => BugState) => {
-    cachedAPIRequest('bugs', 10, dispatch, getState, () => {
+    cachedAPIRequest('bugs', cacheTime, dispatch, getState, () => {
         dispatch(apiCallStarted({
             url: url,
             method: "get",
