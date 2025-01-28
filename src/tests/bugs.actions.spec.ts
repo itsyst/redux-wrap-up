@@ -1,5 +1,5 @@
 import { apiCallStarted } from '../store/constants/api-bugs-constants';
-import { addBug, BugState, getBugs, removeBug, updateBug } from '../store/entities/bugs';
+import { addBug, assignBugToUser, BugState, getBugs, removeBug, updateBug } from '../store/entities/bugs';
 import { cachedAPIRequest } from '../store/utils/cache';
 
 jest.mock('../store/utils/cache');
@@ -39,6 +39,26 @@ describe('bugs action creators - thunks (async actions)', () => {
                     data: mockBug,
                     onStart: "bugs/bugsRequested",
                     onSuccess: "bugs/bugResolved",
+                    onError: "bugs/bugsRequestFailed",
+                })
+            );
+        });
+    });
+
+    describe('assignBugToUser', () => {
+        it('dispatches apiCallStarted with correct parameters', () => {
+            const mockBug = { id: '1', userId:1, resolved: true };
+            const dispatch = jest.fn();
+            const thunk = assignBugToUser(mockBug);
+            thunk(dispatch);
+
+            expect(dispatch).toHaveBeenCalledWith(
+                apiCallStarted({
+                    url: '/bugs/1',
+                    method: 'patch',
+                    data: mockBug,
+                    onStart: "bugs/bugsRequested",
+                    onSuccess: "bugs/bugAssignedUser",
                     onError: "bugs/bugsRequestFailed",
                 })
             );

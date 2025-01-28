@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import {
 	addBug,
+	assignBugToUser,
 	Bug,
 	BugState,
 	getBugs,
@@ -58,6 +59,7 @@ const BugList = () => {
 	const handleSaveBug = () => {
 		if (editingBugId && editedBug) {
 			store.dispatch(updateBug(editedBug as Bug));
+			if(editedBug.userId) store.dispatch(assignBugToUser(editedBug as Bug)); 
 			const updatedBugs = draggedBugs.map((bug) =>
 				bug.id === editingBugId ? { ...bug, ...editedBug } : bug
 			);

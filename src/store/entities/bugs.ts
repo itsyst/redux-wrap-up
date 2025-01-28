@@ -38,6 +38,7 @@ const slice = createSlice({
             const index = state.list.findIndex(bug => bug.id === bagId);
             if (index !== -1)
                 state.list[index].userId = userId
+            state.loading = false;
         },
         bugAdded: (state, action) => {
             state.list.unshift(action.payload.data);
@@ -59,13 +60,11 @@ const slice = createSlice({
                 if (action.payload.data.tags !== undefined) {
                     bug.tags = action.payload.data.tags;
                 }
-                bug.resolved = action.payload.data.resolved;
-                if (action.payload.data.userId !== undefined) {
-                    bug.userId = action.payload.data.userId;
-                }
                 if (action.payload.data.reportedAt !== undefined) {
                     bug.reportedAt = action.payload.data.reportedAt;
                 }
+                bug.resolved = action.payload.data.resolved;
+               
                 state.loading = false;
             }
             // const bugIndex = state.list.findIndex(bug => bug.id === action.payload.id);
@@ -77,6 +76,7 @@ const slice = createSlice({
         bugRemoved: (state, action) => {
             const index = state.list.findIndex(bug => bug.id === action.payload.data.id)
             state.list.splice(index, 1);
+            state.loading = false;
         }
     }
 })
@@ -96,7 +96,7 @@ export const getBugs = () => (dispatch: Dispatch, getState: () => BugState) => {
             onError: bugsRequestFailed.type
         }));
     });
- };
+};
 
 export const addBug = (bug: Bug) => (dispatch: Dispatch) => {
     const action = apiCallStarted({
@@ -109,7 +109,7 @@ export const addBug = (bug: Bug) => (dispatch: Dispatch) => {
     });
 
     dispatch(action);
- 
+
     // Return the action with a promise wrapper
     return Promise.resolve(action);
 };
@@ -120,7 +120,7 @@ export const updateBug = (bug: Partial<Bug>) => (dispatch: Dispatch) => {
         method: "patch",
         data: bug, // Include the bug data in the POST request
         onStart: bugsRequested.type,
-        onSuccess: bugResolved.type || bugAssignedUser,
+        onSuccess: bugResolved.type,
         onError: bugsRequestFailed.type
     }));
 };
@@ -135,6 +135,18 @@ export const removeBug = (id: string) => (dispatch: Dispatch) => {
         onError: bugsRequestFailed.type
     }));
 };
+
+export const assignBugToUser = (bug: Partial<Bug>) => (dispatch: Dispatch) => {
+    dispatch(apiCallStarted({
+        url: url + '/' + bug.id,
+        method: "patch",
+        data: bug,
+        onStart: bugsRequested.type,
+        onSuccess: bugAssignedUser.type,
+        onError: bugsRequestFailed.type
+    }));
+}
+
 // Reducer
 export default slice.reducer;
 

@@ -1,8 +1,10 @@
 import { Action, configureStore, Middleware } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { apiCallStarted } from '../store/constants/api-bugs-constants';
 import { addBug, Bug, getBugs, updateBug } from '../store/entities/bugs';
 import bugsApi from '../store/middleware/bugs-api';
 import rootReducer from '../store/reducers';
+
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -74,5 +76,16 @@ describe('bugs API integration tests', () => {
         const stateBug = store.getState().entities.bugs.list[0];
         expect(stateBug.resolved).toBe(true);
         expect(stateBug.description).toBe('Integration test bug');
+    });
+
+    it('should handle bug failed', async () => {
+        const { store } = createTestStore();
+        const errorMessage = 'Network Error';
+        const mockError = new Error(errorMessage);
+        mockedAxios.request.mockRejectedValue(mockError);
+
+        await store.dispatch(addBug(testBug));
+
+        expect(mockedAxios.request).toHaveBeenCalled();
     });
 });
