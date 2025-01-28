@@ -1,6 +1,5 @@
 import { Action, configureStore, Middleware } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { apiCallStarted } from '../store/constants/api-bugs-constants';
 import { addBug, Bug, getBugs, updateBug } from '../store/entities/bugs';
 import bugsApi from '../store/middleware/bugs-api';
 import rootReducer from '../store/reducers';
