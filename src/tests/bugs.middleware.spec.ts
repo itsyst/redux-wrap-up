@@ -1,16 +1,28 @@
-import { configureStore, Middleware } from '@reduxjs/toolkit';
+import { Action, configureStore, Middleware } from '@reduxjs/toolkit';
 import axios from 'axios';
-import rootReducer from '../store/reducers';
+import { addBug, Bug, getBugs, updateBug } from '../store/entities/bugs';
 import bugsApi from '../store/middleware/bugs-api';
-import { addBug, getBugs, updateBug, Bug } from '../store/entities/bugs';
+import rootReducer from '../store/reducers';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-const createTestStore = () => configureStore({
-    reducer: rootReducer,
-    middleware: (gDM) => gDM().concat(bugsApi as Middleware)
-});
+const createTestStore = () => {
+    const actionHistory: Action[] = [];
+
+    const store = configureStore({
+        reducer: rootReducer,
+        middleware: (gDM) => gDM().concat(
+            bugsApi as Middleware,
+            () => next => action => {
+                actionHistory.push(action as Action)
+                return next(action);
+            }
+        )
+    });
+
+    return { store, actions: actionHistory };
+};
 
 describe('bugs API integration tests', () => {
     const testBug: Bug = {
@@ -24,7 +36,7 @@ describe('bugs API integration tests', () => {
     });
 
     it('should complete addBug flow', async () => {
-        const store = createTestStore();
+        const { store } = createTestStore();
         mockedAxios.request.mockResolvedValue({ data: testBug });
 
         await store.dispatch(addBug(testBug));
@@ -35,7 +47,7 @@ describe('bugs API integration tests', () => {
     });
 
     it('should handle caching in getBugs', async () => {
-        const store = createTestStore();
+        const { store } = createTestStore();
         const mockBugs = [testBug];
         mockedAxios.request.mockResolvedValue({ data: mockBugs });
 
@@ -49,7 +61,7 @@ describe('bugs API integration tests', () => {
     });
 
     it('should handle partial updates', async () => {
-        const store = createTestStore();
+        const { store } = createTestStore();
         const initialBug = { ...testBug, resolved: false };
         const updatedBug = { ...testBug, resolved: true };
 
