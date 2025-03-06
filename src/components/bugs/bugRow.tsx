@@ -34,7 +34,7 @@ const BugRow: React.FC<BugRowProps> = ({
 	const isEditing = editingBugId === bug.id;
 
 	const getUserName = (userId: number) => {
-		const user = users.find((user) => user.id === userId);
+		const user = users.find((user) => Number(user.id) === userId);
 		return user ? user.name : 'Unknown User';
 	};
 
